@@ -1,0 +1,25 @@
+import streamlit as st
+from transformers import pipeline
+
+# Initialize the pipeline
+pipe = pipeline('text-classification', model='nnhwin/emo_model')
+
+# Streamlit app title
+st.title("Emotion Classifier")
+
+# Input box for user text
+user_input = st.text_area("Enter your text:", "I should be feeling eager to leap into stash of fabric and make something")
+
+# Button to classify text
+if st.button("Classify Emotion"):
+    if user_input:
+        pipe=""
+        # Get prediction from the model
+        output = pipe(user_input)
+        
+        # Display the result
+        st.write("Classification Result:")
+        for result in output:
+            st.write(f"Label: {result['label']}, Confidence: {result['score']:.4f}")
+    else:
+        st.warning("Please enter some text to classify.")
